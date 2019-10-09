@@ -20,4 +20,12 @@ class BookmarkManager < Sinatra::Base
     Bookmark.create(url: params[:url], title: params[:title])
     redirect '/bookmarks'
   end
+
+  enable :sessions, :method_override
+
+  delete '/bookmarks/:id' do
+    Bookmark.delete(id: params[:id])
+    redirect '/bookmarks'
+  end
+
 end
