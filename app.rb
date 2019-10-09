@@ -1,12 +1,13 @@
-require 'sinatra'
+require 'sinatra/base'
 require './lib/bookmark'
+require './database_connection_setup.rb'
 
 class BookmarkManager < Sinatra::Base
 
   enable :sessions, :method_override
 
   get '/' do
-
+    'Bookmark Manager'
   end
 
   get '/bookmarks' do
