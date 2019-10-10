@@ -65,4 +65,11 @@ describe Bookmark do
       expect(result.url).to eq 'http://www.makersacademy.com'
     end
   end
+
+  describe '.validate_url' do
+    it 'returns false if user inputs invalid URL' do
+      expect(Bookmark.validate_url?(url: 'www.bbc.co.uk')).not_to be_truthy
+    end
+  end
+
 end
