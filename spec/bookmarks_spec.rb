@@ -25,7 +25,7 @@ describe Bookmark do
       persisted_data = persisted_data(id: bookmark.id)
 
       expect(bookmark).to be_a Bookmark
-      expect(bookmark.id).to_s.to eq persisted_data.first['id']
+      expect(bookmark.id).to eq persisted_data['id']
       expect(bookmark.title).to eq 'Test Bookmark'
       expect(bookmark.url).to eq 'http://www.testbookmark.com'
     end
