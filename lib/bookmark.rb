@@ -2,6 +2,7 @@ require_relative 'database_connection'
 require 'uri'
 
 class Bookmark
+
   def self.all
     result = DatabaseConnection.query("SELECT * FROM bookmarks")
     result.map do |bookmark|
@@ -35,6 +36,10 @@ class Bookmark
 
   def self.validate_url?(url:)
     url =~ /\A#{URI::regexp(['http', 'https'])}\z/
+  end
+
+  def comments(comment_class = Comment)
+    comment_class.where(bookmark_id: id)
   end
 
   attr_reader :id, :title, :url

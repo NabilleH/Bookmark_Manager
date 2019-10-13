@@ -2,6 +2,8 @@ require 'bookmark'
 require 'database_helpers'
 
 describe Bookmark do
+let(:comment_class) { double(:comment_class) }
+
   describe '.all' do
     it 'returns a list of bookmarks' do
       # Add the test data
@@ -22,7 +24,7 @@ describe Bookmark do
   describe '.create' do
     it 'creates a new bookmark' do
       bookmark = Bookmark.create(url: 'http://www.testbookmark.com', title: 'Test Bookmark')
-      persisted_data = persisted_data(id: bookmark.id)
+      persisted_data = persisted_data(table: 'bookmarks', id: bookmark.id)
 
       expect(bookmark).to be_a Bookmark
       expect(bookmark.id).to eq persisted_data['id']
@@ -69,6 +71,15 @@ describe Bookmark do
   describe '.validate_url' do
     it 'returns false if user inputs invalid URL' do
       expect(Bookmark.validate_url?(url: 'www.bbc.co.uk')).not_to be_truthy
+    end
+  end
+
+  describe '#comments' do
+    it 'calls .where on the Comment class' do
+      bookmark = Bookmark.create(title: 'Makers Academy', url: 'http://www.makersacademy.com')
+      expect(comment_class).to receive(:where).with(bookmark_id: bookmark.id)
+
+      bookmark.comments(comment_class)
     end
   end
 
